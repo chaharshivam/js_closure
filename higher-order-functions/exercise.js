@@ -75,37 +75,25 @@ var add = function(a, b) { return a + b; }
 reduce(nums, add, 0);
 
 //Extension 3
-function intersection(arrays) {
-	let args = arguments.length, res = [...arguments[2]];
-
-	while(args--) {
-		res = arguments[args].reduce( (acc, curr, i, arr) => {
-			if (res.includes(curr)) {
-				acc.push(curr);
-			}
-			return acc;
-		}, []);
-	}
-	return res;
+function intersection(...arrays) {
+	return arrays.reduce( (acc, curr) => {
+		return acc.filter( (elm) => curr.includes(elm));
+	});
 }
 
 console.log(intersection([5, 10, 15, 20], [15, 88, 1, 5, 7], [1, 10, 15, 5, 20]));
 // should log: [5, 15]
 
 //Extension 4
-function union(arrays) {
-	let args = arguments.length - 1, res = [...arguments[2]], temp = [];
-
-	while(args--) {
-		temp = arguments[args].reduce( (acc, curr, i, arr) => {
-			if (!res.includes(curr)) {
-				acc.push(curr);
+function union(...arrays) {
+	return arrays.reduce( (acc, curr) => {
+		curr.forEach( (elm) => {
+			if (!acc.includes(elm)) {
+				acc.push(elm);
 			}
-			return acc;
-		}, []);
-		res = [...res, ...temp];
-	}
-	return res;
+		});
+		return acc;
+	});
 }
 
 console.log(union([5, 10, 15], [15, 88, 1, 5, 7], [100, 15, 10, 1, 5]));
